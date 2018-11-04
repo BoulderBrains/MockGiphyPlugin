@@ -1,3 +1,4 @@
+
 // on click of the submit button, create a new button with search value
 $("#search-submit").on("click", showMeGifs);
 
@@ -22,7 +23,7 @@ function showMeGifs() {
 			var stillURL = response.data[i].images.original_still.url;
 
 			// forming an element for the return item
-			var wrapper = $("<div class='col-lg-4 col-sm-6 wrapper'>");
+			var wrapper = $("<div class='col-sm-6 wrapper'>");
 			var ratingElement = $("<p>").text("Rating: " + rating);
 			var image = $("<img class='returned-image'>").attr("src", stillURL);
 			image.attr("data-still", stillURL);
