@@ -17,21 +17,19 @@ function showMeGifs() {
 		console.log(response);
 		for (var i = 0; i < response.data.length; i++) {
 			// pulling out the items I want to use from the API
-			var rating = response.data[i].rating;
 			var animateURL = response.data[i].images.downsized.url;
 			var stillURL = response.data[i].images.original_still.url;
 
 			// forming an element for the return item
 			var wrapper = $("<div class='col-sm-6 wrapper'>");
 			var startStopButton = $("<input type='button' class='btn btn-secondary startStopButton' value='start/stop'>");
-			var ratingElement = $("<p>").text("Rating: " + rating);
 			var image = $("<img class='returned-image'>").attr("src", animateURL);
 			image.attr("data-still", stillURL);
 			image.attr("data-animate", animateURL);
 			image.attr("data-state", "animate");
 
-			// adding the ratingElement paragraph and the image img to the wrapper
-			wrapper.append(image, startStopButton, ratingElement);
+			// adding the created image and start and stop buttons together to the wrapper
+			wrapper.append(image, startStopButton);
 			// rendering the wrapper to the #results-container
 			$("#results-container").prepend(wrapper);
 		}
@@ -55,6 +53,8 @@ function gifStartStop() {
 		$(this).prev().attr("data-state", "still");
 	}
 }
+
+
 
 function copyImage(url) {
 	var img = document.createElement('img');
