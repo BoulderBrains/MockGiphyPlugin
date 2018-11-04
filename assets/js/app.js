@@ -1,4 +1,3 @@
-
 // on click of the submit button, create a new button with search value
 $("#search-submit").on("click", showMeGifs);
 
@@ -9,7 +8,7 @@ function showMeGifs() {
 	var searchTerm = $("#search-input").val().trim();
 	var giphyKey = "lG9ckorGrueBoeXQXp16qJ66xivTGyd1";
 	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm +
-	 "&api_key=" + giphyKey + "&limit=10";
+		"&api_key=" + giphyKey + "&limit=10";
 
 	$.ajax({
 		url: queryURL,
@@ -24,46 +23,61 @@ function showMeGifs() {
 
 			// forming an element for the return item
 			var wrapper = $("<div class='col-sm-6 wrapper'>");
+			var startStopButton = $("<input type='button' class='btn btn-secondary startStopButton' value='start/stop'>");
 			var ratingElement = $("<p>").text("Rating: " + rating);
-			var image = $("<img class='returned-image'>").attr("src", stillURL);
+			var image = $("<img class='returned-image'>").attr("src", animateURL);
 			image.attr("data-still", stillURL);
 			image.attr("data-animate", animateURL);
-			image.attr("data-state", "still");
+			image.attr("data-state", "animate");
 
 			// adding the ratingElement paragraph and the image img to the wrapper
-			wrapper.append(image, ratingElement);
+			wrapper.append(image, startStopButton, ratingElement);
 			// rendering the wrapper to the #results-container
 			$("#results-container").prepend(wrapper);
 		}
 	});
 };
 
-// This is triggering the start/stop of a gif by swapping out the src="" URLs
+// Listening to clicks on the Start/Stop buttons to trigger start & stop the gif playback
+$(document).on("click", ".startStopButton", gifStartStop);
+
+// Starting and Stopping the gif by swapping out the src="" URLs
 function gifStartStop() {
-	var state = $(this).attr("data-state");
-	var dataStill = $(this).attr("data-still");
-	var dataAnimate = $(this).attr("data-animate");
+	var state = $(this).prev().attr("data-state");
+	var dataStill = $(this).prev().attr("data-still");
+	var dataAnimate = $(this).prev().attr("data-animate");
 
 	if (state === "still") {
-		$(this).attr("src", dataAnimate);
-		$(this).attr("data-state", "animate");
+		$(this).prev().attr("src", dataAnimate);
+		$(this).prev().attr("data-state", "animate");
 	} else {
-		$(this).attr("src", dataStill);
-		$(this).attr("data-state", "still");
+		$(this).prev().attr("src", dataStill);
+		$(this).prev().attr("data-state", "still");
 	}
 }
 
-// listeing to clicks on the returned images to trigger gifState and start/stop the gif
-$(document).on("click", ".returned-image", gifStartStop);
+function copyImage(url) {
+	var img = document.createElement('img');
+	img.src = url;
+	document.body.appendChild(img);
+	var r = document.createRange();
+	r.setStartBefore(img);
+	r.setEndAfter(img);
+	r.selectNode(img);
+	var sel = window.getSelection();
+	sel.addRange(r);
+	document.execCommand('Copy');
+}
 
 
+function copyGifToClipboard() {
+	// Copy gif to clipboard on click
+	var url = $(this).src;
+	console.log(url);
+	var copyGifButton = $(".returned-image");
+	console.log(copyGifButton);
 
-
-//copying image to clipboard on click example: 
-var copyBobBtn = document.querySelector('.js-copy-bob-btn'),
-  copyJaneBtn = document.querySelector('.js-copy-jane-btn');
-
-copyBobBtn.addEventListener('click', function(event) {
-  copyTextToClipboard('Bob');
-  copyImage('https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=350&h=150')
-});
+	// copyTextToClipboard('Gif Clicked');
+	copyImage(this.url);
+	console.log("Copy to clipboard function triggered");
+}
