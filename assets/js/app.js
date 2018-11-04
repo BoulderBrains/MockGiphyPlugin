@@ -54,3 +54,15 @@ function gifStartStop() {
 
 // listeing to clicks on the returned images to trigger gifState and start/stop the gif
 $(document).on("click", ".returned-image", gifStartStop);
+
+
+
+
+//copying image to clipboard on click example: 
+var copyBobBtn = document.querySelector('.js-copy-bob-btn'),
+  copyJaneBtn = document.querySelector('.js-copy-jane-btn');
+
+copyBobBtn.addEventListener('click', function(event) {
+  copyTextToClipboard('Bob');
+  copyImage('https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=350&h=150')
+});
