@@ -1,6 +1,8 @@
 # MockGiphyPlugin
 This is a mock project for a giphy plugin. 
 
+##### Github pages URL: https://boulderbrains.github.io/MockGiphyPlugin/
+
 This project is supposed to simulate a plugin button that would be placed within wordpress editor.
 
 TO DO:
