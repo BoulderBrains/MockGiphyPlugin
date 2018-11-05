@@ -17,6 +17,7 @@
 	background-size: contain;
     background-repeat: no-repeat;
 	background-position: center;
-	height: 25px;
-    width: 45px;
+	height: 60px;
+	width: 60px;
+	margin: 20px;
 }
